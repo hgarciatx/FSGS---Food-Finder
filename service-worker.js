@@ -1,7 +1,7 @@
 self.addEventListener("install", e => {
   e.waitUntil(
     caches.open("fff-cache").then(cache => {
-      return cache.addAll(["./", "./FSGS-Food-Finder.html"]);
+      return cache.addAll(["./", "./index.html"]);
     })
   );
 });
