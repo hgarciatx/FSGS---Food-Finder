@@ -559,6 +559,7 @@
                     class="icon">🛠</span>Thresholds</button>
             <button class="btn" id="btn-reset" title="Clear search &amp; filters"><span
                     class="icon">🧹</span>Reset</button>
+            <button class="btn" id="btn-clear" title="Clear all data"><span class="icon">🗑</span>Clear Data</button>
         </div>
         <!-- Add/Edit panel -->
         <section aria-label="Add or edit a food" class="card hidden" id="add-panel">
@@ -693,11 +694,16 @@
             const defaults = {
                 thresholds: { sodium_mg: 140, potassium_mg: 200, phosphorus_mg: 150, sugar_g: 5 },
                 sample: [
-                    { id: uid(), name: 'Broccoli (raw)', serving: '1 cup (91g)', sodium_mg: 30, sugar_g: 1.5, potassium_mg: 288, phosphorus_mg: 60, protein_g: 2.6, calories_kcal: 31, carbs_g: 6, fat_g: 0.3, fiber_g: 2.4, cholesterol_mg: 0, calcium_mg: 43, magnesium_mg: 19, vitamin_d_mcg: 0, ingredients: 'broccoli', tags: ['veg'], notes: '' },
+                    { id: uid(), name: 'Broccoli (raw)', serving: '1 cup (91g)', sodium_mg: 30, sugar_g: 1.5, potassium_mg: 316, phosphorus_mg: 60, protein_g: 2.6, calories_kcal: 31, carbs_g: 6, fat_g: 0.3, fiber_g: 2.4, cholesterol_mg: 0, calcium_mg: 43, magnesium_mg: 19, vitamin_d_mcg: 0, ingredients: 'broccoli', tags: ['veg'], notes: '' },
                     { id: uid(), name: 'Cauliflower (raw)', serving: '1 cup (107g)', sodium_mg: 32, sugar_g: 2.0, potassium_mg: 320, phosphorus_mg: 44, protein_g: 2.0, calories_kcal: 27, carbs_g: 5, fat_g: 0.3, fiber_g: 2.1, cholesterol_mg: 0, calcium_mg: 22, magnesium_mg: 16, vitamin_d_mcg: 0, ingredients: 'cauliflower', tags: ['veg'], notes: '' },
                     { id: uid(), name: 'White rice (cooked)', serving: '1/2 cup (80g)', sodium_mg: 0, sugar_g: 0, potassium_mg: 26, phosphorus_mg: 16, protein_g: 2.0, calories_kcal: 103, carbs_g: 22, fat_g: 0.2, fiber_g: 0.3, cholesterol_mg: 0, calcium_mg: 5, magnesium_mg: 8, vitamin_d_mcg: 0, ingredients: 'rice, water', tags: ['grain'], notes: '' },
-                    { id: uid(), name: 'Egg whites (cooked)', serving: '3 tbsp (46g)', sodium_mg: 55, sugar_g: 0, potassium_mg: 70, phosphorus_mg: 6, protein_g: 3.6, calories_kcal: 25, carbs_g: 0.3, fat_g: 0.0, fiber_g: 0, cholesterol_mg: 0, calcium_mg: 3, magnesium_mg: 3, vitamin_d_mcg: 0, ingredients: 'egg whites', tags: ['protein'], notes: '' }
-                ]
+                    { id: uid(), name: 'Egg whites (cooked)', serving: '3 tbsp (46g)', sodium_mg: 55, sugar_g: 0, potassium_mg: 70, phosphorus_mg: 6, protein_g: 3.6, calories_kcal: 25, carbs_g: 0.3, fat_g: 0.0, fiber_g: 0, cholesterol_mg: 0, calcium_mg: 3, magnesium_mg: 3, vitamin_d_mcg: 0, ingredients: 'egg whites', tags: ['protein'], notes: '' },
+                    { id: uid(), name: 'Blueberries (raw)', serving: '1 cup (148g)', sodium_mg: 1, sugar_g: 15, potassium_mg: 114, phosphorus_mg: 18, protein_g: 1.1, calories_kcal: 84, carbs_g: 21, fat_g: 0.5, fiber_g: 3.6, cholesterol_mg: 0, calcium_mg: 9, magnesium_mg: 9, vitamin_d_mcg: 0, ingredients: 'blueberries', tags: ['fruit','anti-inflammatory'], notes: 'Rich in antioxidants' },
+                    { id: uid(), name: 'Salmon (cooked)', serving: '3 oz (85g)', sodium_mg: 50, sugar_g: 0, potassium_mg: 370, phosphorus_mg: 200, protein_g: 19, calories_kcal: 175, carbs_g: 0, fat_g: 10, fiber_g: 0, cholesterol_mg: 60, calcium_mg: 10, magnesium_mg: 25, vitamin_d_mcg: 10, ingredients: 'salmon', tags: ['protein','anti-inflammatory'], notes: 'High in omega-3s' },
+                    { id: uid(), name: 'Turmeric (ground)', serving: '1 tsp (3g)', sodium_mg: 1, sugar_g: 0, potassium_mg: 126, phosphorus_mg: 9, protein_g: 0.3, calories_kcal: 9, carbs_g: 2, fat_g: 0.3, fiber_g: 0.7, cholesterol_mg: 0, calcium_mg: 7, magnesium_mg: 2, vitamin_d_mcg: 0, ingredients: 'turmeric', tags: ['spice','anti-inflammatory'], notes: 'Contains curcumin' },
+                    { id: uid(), name: 'Olive oil (extra virgin)', serving: '1 tbsp (14g)', sodium_mg: 0, sugar_g: 0, potassium_mg: 0, phosphorus_mg: 0, protein_g: 0, calories_kcal: 119, carbs_g: 0, fat_g: 14, fiber_g: 0, cholesterol_mg: 0, calcium_mg: 0, magnesium_mg: 0, vitamin_d_mcg: 0, ingredients: 'olive oil', tags: ['fat','anti-inflammatory'], notes: 'Healthy monounsaturated fats' },
+                    { id: uid(), name: 'Spinach (raw)', serving: '1 cup (30g)', sodium_mg: 24, sugar_g: 0.1, potassium_mg: 167, phosphorus_mg: 15, protein_g: 0.9, calories_kcal: 7, carbs_g: 1, fat_g: 0.1, fiber_g: 0.7, cholesterol_mg: 0, calcium_mg: 30, magnesium_mg: 24, vitamin_d_mcg: 0, ingredients: 'spinach', tags: ['veg','anti-inflammatory'], notes: 'Rich in antioxidants & iron' }
+]
             };
 
             // --- State ---
@@ -832,7 +838,19 @@
             btnExport.addEventListener('click', onExport);
             fileImport.addEventListener('change', onImport);
 
-            // Thresholds toggle
+            
+            const btnClear = document.querySelector('#btn-clear');
+            btnClear.addEventListener('click', () => {
+                if (confirm("Clear all saved foods and reload defaults?")) {
+                    localStorage.removeItem(STORAGE_KEY);
+                    foods = [...defaults.sample];
+                    saveFoods();
+                    render();
+                    toast('Data cleared, defaults restored');
+                }
+            });
+
+// Thresholds toggle
             btnTh.addEventListener('click', () => { if (thPanel.classList.contains('hidden')) openThPanel(); else closeThPanel(); });
             btnThSave.addEventListener('click', (e) => { e.stopPropagation(); saveThresholds(); });
             btnThCancel.addEventListener('click', (e) => { e.stopPropagation(); closeThPanel(); });
@@ -853,14 +871,23 @@
             function uid() { return Math.random().toString(36).slice(2, 10); }
 
             function loadFoods() {
-                try {
-                    const raw = localStorage.getItem(STORAGE_KEY);
-                    if (!raw) { localStorage.setItem(STORAGE_KEY, JSON.stringify(defaults.sample)); return [...defaults.sample]; }
+    return [...defaults.sample];
+}
+                    const merged = Object.values(byName);
+                    localStorage.setItem(STORAGE_KEY, JSON.stringify(merged));
+                    return merged;
+                } catch {
+                    localStorage.setItem(STORAGE_KEY, JSON.stringify(defaults.sample));
+                    return [...defaults.sample];
+                }
+            }
                     const arr = JSON.parse(raw);
                     return Array.isArray(arr) ? arr : [...defaults.sample];
                 } catch { return [...defaults.sample]; }
             }
-            function saveFoods() { localStorage.setItem(STORAGE_KEY, JSON.stringify(foods)); }
+            function saveFoods() {
+    // disabled: no localStorage
+}
 
             function loadThresholds() {
                 try {
